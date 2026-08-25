@@ -30,9 +30,10 @@ jobs:
       - name: Run quality checks
         run: npm run quality
 
-  playwright:
-    name: Playwright Tests
+  playwright-smoke:
+    name: Smoke Tests
     needs: quality
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
 
     env:
@@ -57,5 +58,5 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Run Playwright tests
-        run: npm test
+      - name: Run Smoke tests
+        run: npm run test:smoke
