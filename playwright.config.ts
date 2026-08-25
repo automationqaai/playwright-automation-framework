@@ -1,7 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
-import dotenv from "dotenv";
-
-dotenv.config();
+import { config } from "./config/env.config";
 
 export default defineConfig({
   testDir: "./tests",
@@ -20,10 +18,10 @@ export default defineConfig({
     timeout: 5_000,
   },
 
-  reporter: [["list"], ["html", { open: "never" }]],
+  reporter: [["list"], ["html", { open: "never" }], ["allure-playwright"]],
 
   use: {
-    baseURL: process.env.BASE_URL ?? "https://www.samplewebsiteName.com",
+    baseURL: config.baseUrl,
 
     headless: true,
 
@@ -36,6 +34,8 @@ export default defineConfig({
     actionTimeout: 10_000,
 
     navigationTimeout: 30_000,
+
+    testIdAttribute: "data-test",
   },
 
   projects: [

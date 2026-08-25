@@ -8,6 +8,7 @@ export default tseslint.config(
       "test-results/",
       "playwright-report/",
       "allure-results/",
+      "allure-report/",
       "storage/",
     ],
   },

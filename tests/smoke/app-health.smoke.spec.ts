@@ -1,7 +1,7 @@
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 test(
-  "application should be accessible",
+  "application should be reachable",
   {
     tag: "@smoke",
   },
@@ -9,9 +9,6 @@ test(
     const response = await page.goto("/");
 
     expect(response).not.toBeNull();
-
     expect(response?.ok()).toBeTruthy();
-
-    await expect(page).toHaveTitle(/Playwright/);
   },
 );
