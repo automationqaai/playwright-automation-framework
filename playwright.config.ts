@@ -8,6 +8,7 @@ export default defineConfig({
 
   forbidOnly: !!process.env.CI,
 
+  // Retry transient failures in CI, but fail immediately during local development.
   retries: process.env.CI ? 2 : 0,
 
   workers: process.env.CI ? 4 : undefined,
