@@ -30,6 +30,24 @@ jobs:
       - name: Run quality checks
         run: npm run quality
 
+      - name: Verify environment files are not committed
+        shell: bash
+        run: |
+          forbidden_files=(
+            ".env"
+            ".env.local"
+            ".env.development"
+            ".env.test"
+            ".env.production"
+          )
+
+          for file in "${forbidden_files[@]}"; do
+            if git ls-files --error-unmatch "$file" >/dev/null 2>&1; then
+              echo "::error::$file must not be committed."
+              exit 1
+            fi
+          done
+
   playwright-smoke:
     name: Smoke Tests
     needs: quality
