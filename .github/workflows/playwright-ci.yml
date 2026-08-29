@@ -62,7 +62,7 @@ jobs:
         run: npm run test:smoke
 
   playwright-regression:
-    name: Regression - ${{ matrix.browser }} - Shard ${{ matrix.shard }}
+    name: Regression - ${{ matrix.browser }} - Shard ${{ matrix.shard }}/${{ matrix.total-shards }}
     needs: quality
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
@@ -72,16 +72,20 @@ jobs:
       matrix:
         include:
           - browser: chromium
-            shard: 1/2
+            shard: 1
+            total-shards: 2
 
           - browser: chromium
-            shard: 2/2
+            shard: 2
+            total-shards: 2
 
           - browser: firefox
-            shard: 1/1
+            shard: 1
+            total-shards: 1
 
           - browser: webkit
-            shard: 1/1
+            shard: 1
+            total-shards: 1
 
     env:
       BASE_URL: ${{ vars.BASE_URL }}
@@ -106,4 +110,20 @@ jobs:
         run: npx playwright install --with-deps ${{ matrix.browser }}
 
       - name: Run regression tests
-        run: npm run test:regression -- --project=${{ matrix.browser }}
+        run: npm run test:regression -- --project=${{ matrix.browser }} --shard=${{ matrix.shard }}/${{ matrix.total-shards }}
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-${{ matrix.browser }}-shard-${{ matrix.shard }}-of-${{ matrix.total-shards }}
+          path: playwright-report/
+          retention-days: 14
+
+      - name: Upload test artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.browser }}-shard-${{ matrix.shard }}-of-${{ matrix.total-shards }}
+          path: test-results/
+          retention-days: 14
