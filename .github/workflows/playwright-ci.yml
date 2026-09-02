@@ -145,7 +145,7 @@ jobs:
           name: blob-report-${{ matrix.browser }}-shard-${{ matrix.shard }}-of-${{ matrix.total-shards }}
           path: blob-report/
           retention-days: 14
-        
+
       - name: Upload test artifacts
         if: failure()
         uses: actions/upload-artifact@v4
