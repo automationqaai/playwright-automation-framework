@@ -31,7 +31,7 @@ test(
     );
 
     await manager.login.expectLoginError(
-      "Sorry, this user has been blocked out.",
+      "Sorry, this user has been locked out.",
     );
   },
 );
