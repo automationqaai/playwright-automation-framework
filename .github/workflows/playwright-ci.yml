@@ -76,6 +76,10 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
+      - name: Clean Allure results
+        shell: bash
+        run: rm -rf allure-results
+
       - name: Run Smoke tests
         run: npm run test:smoke
 
@@ -127,21 +131,63 @@ jobs:
       - name: Install Playwright browser
         run: npx playwright install --with-deps ${{ matrix.browser }}
 
+      - name: Clean Allure results
+        shell: bash
+        run: rm -rf allure-results
+
       - name: Run regression tests
         run: npm run test:regression -- --project=${{ matrix.browser }} --shard=${{ matrix.shard }}/${{ matrix.total-shards }}
 
-      - name: Upload Playwright report
+      - name: Upload Playwright blob report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report-${{ matrix.browser }}-shard-${{ matrix.shard }}-of-${{ matrix.total-shards }}
-          path: playwright-report/
+          name: blob-report-${{ matrix.browser }}-shard-${{ matrix.shard }}-of-${{ matrix.total-shards }}
+          path: blob-report/
           retention-days: 14
-
+        
       - name: Upload test artifacts
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: test-results-${{ matrix.browser }}-shard-${{ matrix.shard }}-of-${{ matrix.total-shards }}
           path: test-results/
+          retention-days: 14
+
+  playwright-report:
+    name: Merge Playwright Reports
+    needs:
+      - playwright-regression
+    if: always()
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download blob reports
+        uses: actions/download-artifact@v4
+        with:
+          pattern: blob-report-*
+          path: all-blob-reports
+          merge-multiple: true
+
+      - name: Merge Playwright reports
+        run: npx playwright merge-reports --reporter html ./all-blob-reports
+
+      - name: Upload unified Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-unified-report
+          path: playwright-report/
           retention-days: 14

@@ -19,7 +19,9 @@ export default defineConfig({
     timeout: 5_000,
   },
 
-  reporter: [["list"], ["html", { open: "never" }], ["allure-playwright"]],
+  reporter: process.env.CI
+    ? [["list"], ["blob"], ["allure-playwright"]]
+    : [["list"], ["html", { open: "never" }], ["allure-playwright"]],
 
   use: {
     baseURL: config.baseUrl,
