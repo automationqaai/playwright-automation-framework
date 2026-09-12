@@ -21,8 +21,4 @@ export const config = {
     username: getRequiredEnv("TEST_USERNAME"),
     password: getRequiredEnv("TEST_PASSWORD"),
   },
-
-  api: {
-    baseUrl: process.env.API_BASE_URL ?? "",
-  },
 } as const;
