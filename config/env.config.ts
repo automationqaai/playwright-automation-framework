@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 function getRequiredEnv(name: string): string {
-  const value = process.env[name];
+  const value = process.env[name]?.trim();
 
   if (!value) {
     throw new Error(`Required environment variable "${name}" is not defined.`);
@@ -12,10 +12,32 @@ function getRequiredEnv(name: string): string {
   return value;
 }
 
-export const config = {
-  environment: process.env.TEST_ENV ?? "qa",
+function getEnvironment(): string {
+  return process.env.TEST_ENV?.trim() || "qa";
+}
 
-  baseUrl: getRequiredEnv("BASE_URL"),
+function validateBaseUrl(baseUrl: string): string {
+  try {
+    const url = new URL(baseUrl);
+
+    if (!["http:", "https:"].includes(url.protocol)) {
+      throw new Error();
+    }
+
+    return url.toString().replace(/\/$/, "");
+  } catch {
+    throw new Error(
+      `BASE_URL must be a valid HTTP or HTTPS URL. Received: "${baseUrl}"`,
+    );
+  }
+}
+
+const baseUrl = validateBaseUrl(getRequiredEnv("BASE_URL"));
+
+export const config = {
+  environment: getEnvironment(),
+
+  baseUrl,
 
   credentials: {
     username: getRequiredEnv("TEST_USERNAME"),
