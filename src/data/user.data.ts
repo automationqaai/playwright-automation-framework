@@ -1,19 +1,18 @@
-export const users = {
+import { UserData } from "./data.types";
+
+export const users: Record<string, UserData> = {
   standard: {
     username: "standard_user",
     password: "secret_sauce",
   },
-
   invalid: {
     username: "invalid_user",
     password: "invalid_password",
   },
-
   lockedOut: {
     username: "locked_out_user",
     password: "secret_sauce",
   },
-
   problem: {
     username: "problem_user",
     password: "secret_sauce",

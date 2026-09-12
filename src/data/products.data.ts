@@ -1,4 +1,6 @@
-export const products = {
+import { ProductData } from "./data.types";
+
+export const products: Record<string, ProductData> = {
   backpack: {
     name: "Sauce Labs Backpack",
     price: "$29.99",
