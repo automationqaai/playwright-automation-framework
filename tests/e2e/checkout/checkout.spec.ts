@@ -1,12 +1,13 @@
 import { test } from "../../../src/fixtures/base.fixture";
 import { config } from "../../../config/env.config";
-import { checkoutData } from "../../../src/data/checkout.data";
+//import { checkoutData } from "../../../src/data/checkout.data";
 import { products } from "../../../src/data/products.data";
+import { createCustomer } from "../../../src/data/factories/customer.factory";
 
 test(
   "standard user should be able to complete a purchase",
   {
-    tag: ["@e2e", "@critical"],
+    tag: ["@e2e", "@critical", "@checkout"],
   },
   async ({ manager }) => {
     // Login
@@ -19,7 +20,8 @@ test(
 
     // Add product
     const product = products.backpack;
-    const customer = checkoutData.standardCustomer;
+    //const customer = checkoutData.standardCustomer;
+    const customer = createCustomer();
     const backpack = manager.inventory.product(product.name);
 
     await backpack.addToCart();
