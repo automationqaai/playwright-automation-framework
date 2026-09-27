@@ -13,3 +13,11 @@ export type CustomerData = {
   lastName: string;
   postalCode: string;
 };
+
+export type LoginValidationScenario = {
+  name: string;
+  username: string;
+  password: string;
+  expectedError: string;
+  tags: string | string[];
+};
