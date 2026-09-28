@@ -17,7 +17,7 @@ export class LoginPage {
       name: "Login",
     });
 
-    this.errorMessage = page.locator('[data-test="error"]');
+    this.errorMessage = page.getByTestId("error");
   }
 
   async goto(): Promise<void> {
