@@ -1,10 +1,12 @@
 Pull Request
+
 - Quality
 - Smoke
 - Critical
 - E2E
 
 Main
+
 - Quality
 - Cross-browser Regression
   - Chromium shard 1
@@ -13,4 +15,5 @@ Main
   - WebKit
 
 Nightly
+
 - Cross-browser Regression
