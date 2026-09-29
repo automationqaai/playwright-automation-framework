@@ -51,7 +51,7 @@ jobs:
         run: npm ci
 
       - name: Install Playwright browser
-        run: npx playwright install --with-deps ${{ matrix.browser }}
+        run: npx playwright install --with-deps chromium ${{ matrix.browser }}
 
       - name: Clean Allure results
         shell: bash
