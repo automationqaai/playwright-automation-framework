@@ -1,7 +1,7 @@
 import { test } from "../../../src/fixtures/base.fixture";
 import { config } from "../../../config/env.config";
 import { products } from "../../../src/data/products.data";
-import { createCustomer } from "../../../src/data/factories/customer.factory";
+import { createUniqueCustomer } from "../../../src/data/factories/customer.factory";
 
 test(
   "standard user should be able to complete a purchase",
@@ -19,7 +19,7 @@ test(
 
     // Add product
     const product = products.backpack;
-    const customer = createCustomer();
+    const customer = createUniqueCustomer();
     const backpack = manager.inventory.product(product.name);
 
     await backpack.addToCart();

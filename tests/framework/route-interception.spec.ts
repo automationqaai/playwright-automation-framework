@@ -1,11 +1,13 @@
 import { test, expect } from "../../src/fixtures/base.fixture";
 
 test(
-  "standard user should see inventory products",
+  "inventory remains functional when image requests are blocked",
   {
-    tag: "@smoke",
+    tag: "@regression",
   },
   async ({ manager }) => {
+    await manager.network.blockImages();
+
     await manager.inventory.gotoInventoryPage();
 
     await manager.inventory.expectPageLoaded();

@@ -1,6 +1,13 @@
 import { test } from "../../../src/fixtures/base.fixture";
 import { loginValidationScenarios } from "../../../src/data/login-validation.data";
 
+test.use({
+  storageState: {
+    cookies: [],
+    origins: [],
+  },
+});
+
 for (const scenario of loginValidationScenarios) {
   test(
     scenario.name,

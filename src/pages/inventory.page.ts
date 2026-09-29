@@ -5,13 +5,20 @@ export class InventoryPage {
   private readonly productsTitle: Locator;
   private readonly productCards: Locator;
   private readonly sortDropdown: Locator;
+  page: Page;
 
   constructor(page: Page) {
+    this.page = page;
+
     this.productsTitle = page.getByText("Products");
 
     this.productCards = page.locator(".inventory_item");
 
     this.sortDropdown = page.getByTestId("product-sort-container");
+  }
+
+  async gotoInventoryPage(): Promise<void> {
+    await this.page.goto("/inventory.html");
   }
 
   async expectPageLoaded(): Promise<void> {

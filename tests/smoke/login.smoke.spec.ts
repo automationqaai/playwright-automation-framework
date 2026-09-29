@@ -1,6 +1,13 @@
 import { test } from "../../src/fixtures/base.fixture";
 import { config } from "../../config/env.config";
 
+test.use({
+  storageState: {
+    cookies: [],
+    origins: [],
+  },
+});
+
 test(
   "standard user should be able to login",
   {

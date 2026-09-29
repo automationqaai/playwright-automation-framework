@@ -1,5 +1,4 @@
 import { test } from "../../../src/fixtures/base.fixture";
-import { config } from "../../../config/env.config";
 import { products } from "../../../src/data/products.data";
 
 test(
@@ -8,12 +7,7 @@ test(
     tag: "@regression",
   },
   async ({ manager }) => {
-    await manager.login.goto();
-
-    await manager.login.login(
-      config.credentials.username,
-      config.credentials.password,
-    );
+    await manager.inventory.gotoInventoryPage();
 
     const product = products.backpack;
     const backpack = manager.inventory.product(product.name);

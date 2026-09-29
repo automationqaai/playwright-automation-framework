@@ -7,6 +7,7 @@ import { CheckoutInformationPage } from "../pages/checkout-information.page";
 import { CheckoutOverviewPage } from "../pages/checkout-overview.page";
 import { InventoryPage } from "../pages/inventory.page";
 import { LoginPage } from "../pages/login.page";
+import { NetworkManager } from "./network.manager";
 
 export class AppManager {
   readonly login: LoginPage;
@@ -16,11 +17,13 @@ export class AppManager {
   readonly checkoutInformation: CheckoutInformationPage;
   readonly checkoutOverview: CheckoutOverviewPage;
   readonly checkoutComplete: CheckoutCompletePage;
+  readonly network: NetworkManager;
 
   constructor(page: Page) {
     this.login = new LoginPage(page);
     this.inventory = new InventoryPage(page);
     this.cart = new CartPage(page);
+    this.network = new NetworkManager(page);
     this.header = new HeaderComponent(page);
     this.checkoutInformation = new CheckoutInformationPage(page);
     this.checkoutOverview = new CheckoutOverviewPage(page);
