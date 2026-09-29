@@ -14,3 +14,15 @@ export function createCustomer(
     ...overrides,
   };
 }
+
+export function createUniqueCustomer(
+  overrides: Partial<CustomerData> = {},
+): CustomerData {
+  const uniqueData = new Date().getTime().toString();
+  return {
+    ...defaultCustomer,
+    ...overrides,
+    firstName: overrides.firstName ?? `User${uniqueData}`,
+    lastName: overrides.lastName ?? `Test${uniqueData}`,
+  };
+}

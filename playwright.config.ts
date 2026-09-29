@@ -1,5 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
 import { config } from "./config/env.config";
+import { getAuthStatePath } from "./src/setup/auth-state";
 
 export default defineConfig({
   testDir: "./tests",
@@ -43,24 +44,39 @@ export default defineConfig({
 
   projects: [
     {
+      name: "setup",
+      testDir: "./src/setup",
+      testMatch: /.*auth\.setup\.ts/,
+    },
+
+    {
       name: "chromium",
+      testIgnore: /.*\.setup\.ts/,
       use: {
         ...devices["Desktop Chrome"],
+        storageState: getAuthStatePath("standard"),
       },
+      dependencies: ["setup"],
     },
 
     {
       name: "firefox",
+      testIgnore: /.*\.setup\.ts/,
       use: {
         ...devices["Desktop Firefox"],
+        storageState: getAuthStatePath("standard"),
       },
+      dependencies: ["setup"],
     },
 
     {
       name: "webkit",
+      testIgnore: /.*\.setup\.ts/,
       use: {
         ...devices["Desktop Safari"],
+        storageState: getAuthStatePath("standard"),
       },
+      dependencies: ["setup"],
     },
   ],
 });
