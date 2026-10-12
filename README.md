@@ -200,15 +200,15 @@ Populate the test credentials required by your authentication setup.
 
 Use the npm scripts defined in `package.json`.
 
-| Purpose | Command |
-|---|---|
-| Smoke tests | `npm run test:smoke` |
-| Critical tests | `npm run test:critical` |
-| End-to-end tests | `npm run test:e2e` |
-| Regression tests | `npm run test:regression` |
-| Headed execution | `npm run test:headed` |
-| Playwright UI mode | `npm run test:ui` |
-| Debug mode | `npm run test:debug` |
+| Purpose            | Command                   |
+| ------------------ | ------------------------- |
+| Smoke tests        | `npm run test:smoke`      |
+| Critical tests     | `npm run test:critical`   |
+| End-to-end tests   | `npm run test:e2e`        |
+| Regression tests   | `npm run test:regression` |
+| Headed execution   | `npm run test:headed`     |
+| Playwright UI mode | `npm run test:ui`         |
+| Debug mode         | `npm run test:debug`      |
 
 Run tests against a specific browser project:
 
